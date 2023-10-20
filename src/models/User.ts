@@ -28,7 +28,7 @@ const userSchema = new Schema({
     default: 'active',
     enum: ['active', 'blocked'],
   },
-  password: { type: String, required: true },
+  password: { type: String, required: true, select: false },
 },
 { timestamps: true });
 

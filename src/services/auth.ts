@@ -55,13 +55,16 @@ export class AuthService {
     const { identifier, password } = data;
 
 
-    const user = await UserModel.findOne({ $or: [{ email: identifier }, { phoneNumber: identifier }] });
+    const user = await UserModel
+      .findOne({ $or: [{ email: identifier }, { phoneNumber: identifier }] })
+      .select({ password: 1, email: 1, _id: 1, fullName: 1, role: 1, status: 1, phoneNumber: 1 });
 
     if (!user) throw new Error('User not registered');
 
     const correct = await argon2.verify(user.password, password);
 
-    delete user.password;
+    // delete user.password;
+    user.password = undefined;
 
     if (!correct) throw new Error('Password incorrect');
 
