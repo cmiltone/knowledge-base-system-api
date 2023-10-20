@@ -39,7 +39,7 @@ export class AuthService {
 
     user.save();
 
-    delete user.password;
+    user.password = undefined;
 
     const token = this.tokenService.encode({
       _id: user.id,

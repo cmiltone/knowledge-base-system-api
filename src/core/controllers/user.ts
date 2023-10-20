@@ -1,8 +1,8 @@
-import { controller, BaseHttpController, httpPut, httpGet } from 'inversify-express-utils';
+import { controller, BaseHttpController, httpPut, httpGet, httpDelete } from 'inversify-express-utils';
 import { inject } from 'inversify';
 import { celebrate, Joi } from 'celebrate';
 import { UserService } from '../../services/user';
-import { Auth2Middleware } from '../middlewares/auth';
+import { Auth2Middleware, AuthMiddleware } from '../middlewares/auth';
 import { PageOptions } from '../../types/mongoose';
 
 @controller('/v1/user')
@@ -68,5 +68,22 @@ export class UserController extends BaseHttpController {
     const pageResult = await this.userService.page(query, options);
 
     this.httpContext.response.json(pageResult);
+  }
+
+  @httpDelete(
+    '/:userId',
+    AuthMiddleware,
+    celebrate({
+      params: Joi.object({
+        userId: Joi.string().required()
+      })
+    })
+  )
+  async deleteUser(): Promise<void> {
+    const { userId } = this.httpContext.request.params;
+
+    const user = await this.userService.delete(userId);
+
+    this.httpContext.response.json(user);
   }
 }
