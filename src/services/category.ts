@@ -2,6 +2,8 @@ import { injectable } from 'inversify';
 import _ from 'lodash';
 
 import { CategoryModel } from '../models/Category';
+import { PageOptions, Query } from '../types/mongoose';
+import { PaginateResult } from 'mongoose';
 // import { PageOptions, PageResult } from '../types/mongoose';
 
 @injectable()
@@ -43,9 +45,9 @@ export class CategoryService {
     return category;
   }
 
-  // async page(options: PageOptions): Promise<PageResult<Category>> {
-  //   const page = await CategoryModel.paginate<PageResult<Category>>(options);
+  async page(query: Query, options: PageOptions): Promise<PaginateResult<Category>> {
+    const page = await CategoryModel.paginate<Category, PageOptions>(query, options);
 
-  //   return page;
-  // }
+    return page;
+  }
 }

@@ -36,4 +36,6 @@ type UserDocument = DefaultDocument & User;
 
 userSchema.plugin(mongoosePaginate);
 
+userSchema.index({ fullName: 'text', email: 'text' });
+
 export const UserModel = model<UserDocument, PaginateModel<UserDocument>>('User',userSchema);

@@ -34,4 +34,6 @@ type ArticleDocument = DefaultDocument & Article;
 
 articleSchema.plugin(mongoosePaginate);
 
+articleSchema.index({ title: 'text', content: 'text' })
+
 export const ArticleModel = model<ArticleDocument, PaginateModel<ArticleDocument>>('Article',articleSchema);

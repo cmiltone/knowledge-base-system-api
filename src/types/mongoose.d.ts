@@ -7,10 +7,12 @@ export interface PageResult<T> {
   sort?: string;
 }
 
+type Query = { $text?: { $search: string } };
+
 export interface PageOptions {
-  q?: {[key]: string};
   sort?: string;
   select?: string;
+  lean?: boolean;
   limit?: number;
   page?: number;
   key?: string;

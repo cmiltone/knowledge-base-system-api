@@ -1,8 +1,9 @@
 import { injectable } from 'inversify';
 import _ from 'lodash';
+import { PaginateResult } from 'mongoose';
 
 import { ArticleModel } from '../models/Article';
-// import { PageOptions, PageResult } from '../types/mongoose';
+import { PageOptions, Query } from '../types/mongoose';
 
 @injectable()
 export class ArticleService {
@@ -49,12 +50,14 @@ export class ArticleService {
 
     if (!article) throw new Error('Article not found');
 
+    await article.populate([{ path: 'creator' }, { path: 'category' }])
+
     return article;
   }
 
-  // async page(options: PageOptions): Promise<PageResult<Article>> {
-  //   const page = await ArticleModel.paginate<PageResult<Article>>(options);
+  async page(query: Query, options: PageOptions): Promise<PaginateResult<Article>> {
+    const page = await ArticleModel.paginate<Article, PageOptions>(query, options);
 
-  //   return page;
-  // }
+    return page;
+  }
 }
