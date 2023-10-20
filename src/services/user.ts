@@ -1,28 +1,31 @@
 import { injectable } from 'inversify';
+import _ from 'lodash';
+
+import { UserModel } from '../models/User';
 
 @injectable()
 export class UserService {
   async update(
     userId: string,
     update: {
-      username?: User['username'];
-      firstName?: User['firstName'];
-      lastName?: User['lastName'];
+      fullName?: User['fullName'];
       phoneNumber?: User['phoneNumber'];
       email?: User['email'];
       role?: User['role'];
       status?: User['status'];
     },
   ): Promise<User> {
-    const user = { ...update };
+    const user = await UserModel.findById(userId);
 
     if (!user) throw new Error('User not found');
 
-    return user;
+    const updatedUser = await UserModel.findByIdAndUpdate(userId, _.pickBy(update), { new: true})
+
+    return updatedUser;
   }
 
   async findById(userId: string): Promise<User> {
-    const user = { id: userId };
+    const user = await UserModel.findById(userId);
 
     if (!user) throw new Error('User not found');
 
@@ -30,9 +33,11 @@ export class UserService {
   }
 
   async delete(userId: string): Promise<User> {
-    const user = { id: userId };
+    const user = await UserModel.findById(userId);
 
     if (!user) throw new Error('User not found');
+
+    await UserModel.findByIdAndDelete(userId);
 
     return user;
   }

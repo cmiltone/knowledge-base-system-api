@@ -28,7 +28,7 @@ export class Auth2Middleware extends BaseMiddleware {
       if (principal.details && principal.details.status === 'blocked')
         throw new Error('You have been blocked. Contact admin');
 
-      if (await principal.isAuthenticated2()) return next();
+      if (await principal.isAuthenticated()) return next();
 
       throw new Error('Authentication failed');
     } catch (error) {

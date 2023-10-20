@@ -1,14 +1,14 @@
 export interface PageResult<T> {
   docs: T[];
-  total: number;
+  totalDocs: number;
   limit: number;
   page: number;
-  pages: number;
-  sort: string;
+  totalPages: number;
+  sort?: string;
 }
 
 export interface PageOptions {
-  q?: string;
+  q?: {[key]: string};
   sort?: string;
   select?: string;
   limit?: number;

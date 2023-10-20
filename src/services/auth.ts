@@ -41,7 +41,12 @@ export class AuthService {
 
     delete user.password;
 
-    const token = this.tokenService.encode({ _id: user.id, verified: true });
+    const token = this.tokenService.encode({
+      _id: user.id,
+      fullName: user.fullName,
+      email: user.email,
+      status: user.status
+    });
 
     return { user: user, token };
   }
@@ -60,7 +65,12 @@ export class AuthService {
 
     if (!correct) throw new Error('Password incorrect');
 
-    const token = this.tokenService.encode({ _id: user.id, verified: true });
+    const token = this.tokenService.encode({
+      _id: user.id,
+      fullName: user.fullName,
+      email: user.email,
+      status: user.status
+    });
 
     return { user, token };
   }

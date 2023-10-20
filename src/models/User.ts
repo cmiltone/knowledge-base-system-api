@@ -4,6 +4,11 @@ import mongoosePaginate from 'mongoose-paginate-v2';
 import { DefaultDocument } from '../types/mongoose';
 
 const userSchema = new Schema({
+  fullName: {
+    type: String,
+    required: true,
+    es_indexed: true,
+  },
   email: {
     type: String,
     required: true,
