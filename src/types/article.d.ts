@@ -1,3 +1,5 @@
+import { File } from "./file";
+
 type Category = {
     _id?: string;
     name: string;
@@ -14,6 +16,7 @@ type Article = {
     creator: User | string;
     category: Category | string;
     status: string;
+    media?: File[];
     createdAt?: Date;
     updatedAt?: Date;
 };

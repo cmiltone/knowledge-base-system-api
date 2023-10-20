@@ -2,6 +2,8 @@ import { Schema, model, PaginateModel } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 
 import { DefaultDocument } from '../types/mongoose';
+import { fileSchema } from '../schema/file';
+import { Article } from '../types/article';
 
 const articleSchema = new Schema({
   title: {
@@ -27,6 +29,7 @@ const articleSchema = new Schema({
     default: 'draft',
     enum: ['published', 'draft', 'deleted'],
   },
+  media: [fileSchema]
 },
 { timestamps: true });
 

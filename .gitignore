@@ -7,3 +7,5 @@ ecosystem.config.js
 coverage
 
 yarn-error.log
+
+_files

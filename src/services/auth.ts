@@ -37,7 +37,7 @@ export class AuthService {
 
     const user = new UserModel({ phoneNumber, email, fullName, password: hash });
 
-    user.save();
+    await user.save();
 
     user.password = undefined;
 

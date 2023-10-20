@@ -4,7 +4,7 @@ import _ from 'lodash';
 import { CategoryModel } from '../models/Category';
 import { PageOptions, Query } from '../types/mongoose';
 import { PaginateResult } from 'mongoose';
-// import { PageOptions, PageResult } from '../types/mongoose';
+import { Category } from '../types/article';
 
 @injectable()
 export class CategoryService {
@@ -32,7 +32,7 @@ export class CategoryService {
 
     if (!existingCategory) throw new Error('Category not found');
 
-    const category = await CategoryModel.findByIdAndUpdate(id, _.pickBy(data), { new: true });
+    const category = await CategoryModel.findByIdAndUpdate(id, _.pickBy(data), { new: true, runValidators: true });
 
     return category;
   }

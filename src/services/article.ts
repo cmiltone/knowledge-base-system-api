@@ -4,38 +4,42 @@ import { PaginateResult } from 'mongoose';
 
 import { ArticleModel } from '../models/Article';
 import { PageOptions, Query } from '../types/mongoose';
+import { Article } from '../types/article';
+
+type ArticleData = {
+  title: Article['title'];
+  content: Article['content'];
+  category: Article['category'];
+  creator: Article['creator'];
+  status: Article['status'];
+  media: Article['media'];
+};
 
 @injectable()
 export class ArticleService {
-  async create(data: {
-      title: Article['title'];
-      content: Article['content'];
-      category: Article['category'];
-      creator: Article['creator'];
-      status: Article['status'];
-    }): Promise<Article> {
+  async create(data: ArticleData): Promise<Article> {
     const existingArticle = await ArticleModel.findOne({ title: data.title });
 
     if (existingArticle) throw new Error('Article already created');
 
     const article = new ArticleModel(data);
 
+    await article.save();
+
     await article.populate([
       { path: 'category' },
       { path: 'creator' }
     ])
 
-    article.save();
-
     return article;
   }
 
-  async update(id: string, data: { title, content, category, creator, status }): Promise<Article> {
+  async update(id: string, data: ArticleData): Promise<Article> {
     const existingArticle = await ArticleModel.findById(id);
 
     if (!existingArticle) throw new Error('Article not found');
 
-    const article = await ArticleModel.findByIdAndUpdate(id, _.pickBy(data), { new: true });
+    const article = await ArticleModel.findByIdAndUpdate(id, _.pickBy(data), { new: true, runValidators: true });
 
     await article.populate([
       { path: 'category' },

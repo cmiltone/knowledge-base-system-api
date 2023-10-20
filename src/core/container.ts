@@ -5,6 +5,7 @@ import { TokenService } from '../services/token';
 import { UserService } from '../services/user';
 import { ArticleService } from '../services/article';
 import { CategoryService } from '../services/category';
+import { UploadMiddleware } from './middlewares/upload';
 
 export function getContainer(): Container {
   const container = new Container({ skipBaseClassChecks: true });
@@ -16,6 +17,7 @@ export function getContainer(): Container {
   container.bind<UserService>(UserService).to(UserService);
   container.bind<ArticleService>(ArticleService).to(ArticleService);
   container.bind<CategoryService>(CategoryService).to(CategoryService);
+  container.bind<UploadMiddleware>(UploadMiddleware).to(UploadMiddleware);
   
   return container;
 }

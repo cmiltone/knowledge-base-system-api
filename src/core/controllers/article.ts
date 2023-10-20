@@ -4,6 +4,9 @@ import { celebrate, Joi } from 'celebrate';
 import { ArticleService } from '../../services/article';
 import { AuthMiddleware } from '../middlewares/auth';
 import { PageOptions } from '../../types/mongoose';
+import { fileJoi } from '../../util/celebrate';
+import { UploadMiddleware, upload } from '../middlewares/upload';
+import { FILE_PATH } from '../../config/multer';
 
 @controller('/v1/article')
 export class ArticleController extends BaseHttpController {
@@ -13,6 +16,8 @@ export class ArticleController extends BaseHttpController {
   @httpPost(
     '/',
     AuthMiddleware,
+    upload({ filePath: FILE_PATH, fileName: 'files', count: 4 }),
+    UploadMiddleware,
     celebrate({
       body: Joi.object({
         title: Joi.string().required(),
@@ -20,13 +25,14 @@ export class ArticleController extends BaseHttpController {
         creator: Joi.string().required(),
         category: Joi.string().required(),
         status: Joi.string().equal('published', 'draft', 'deleted').required(),
+        files: Joi.array().items(fileJoi).max(4),
       }),
     }),
   )
   async create(): Promise<void> {
-    const { title, content, creator, category, status } = this.httpContext.request.body;
+    const { title, content, creator, category, status, files } = this.httpContext.request.body;
 
-    const result = await this.articleService.create({ title, content, creator, category, status });
+    const result = await this.articleService.create({ title, content, creator, category, status, media: files });
 
     this.httpContext.response.json(result);
   }
@@ -34,6 +40,8 @@ export class ArticleController extends BaseHttpController {
   @httpPut(
     '/',
     AuthMiddleware,
+    upload({ filePath: FILE_PATH, fileName: 'files', count: 4 }),
+    UploadMiddleware,
     celebrate({
       body: Joi.object({
         articleId: Joi.string().required(),
@@ -42,13 +50,14 @@ export class ArticleController extends BaseHttpController {
         creator: Joi.string(),
         category: Joi.string(),
         status: Joi.string().equal('published', 'draft', 'deleted'),
+        files: Joi.array().items(fileJoi).max(4),
       }),
     }),
   )
   async register(): Promise<void> {
-    const { articleId, title, content, creator, category, status } = this.httpContext.request.body;
+    const { articleId, title, content, creator, category, status, files } = this.httpContext.request.body;
 
-    const result = await this.articleService.update(articleId, { title, content, creator, category, status });
+    const result = await this.articleService.update(articleId, { title, content, creator, category, status, media: files });
 
     this.httpContext.response.json(result);
   }

@@ -21,7 +21,7 @@ export class UserService {
 
     if (!user) throw new Error('User not found');
 
-    const updatedUser = await UserModel.findByIdAndUpdate(userId, _.pickBy(update), { new: true })
+    const updatedUser = await UserModel.findByIdAndUpdate(userId, _.pickBy(update), { new: true, runValidators: true })
 
     return updatedUser;
   }
