@@ -24,6 +24,7 @@
   },
   "homepage": "https://github.com/cmiltone/knowledge-base-system-api#readme",
   "dependencies": {
+    "argon2": "^0.31.1",
     "celebrate": "^15.0.1",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
@@ -31,6 +32,8 @@
     "inversify": "^6.0.1",
     "inversify-express-utils": "^6.4.3",
     "jsonwebtoken": "^9.0.2",
+    "mongoose": "^7.6.3",
+    "mongoose-paginate-v2": "^1.7.4",
     "net": "^1.0.2",
     "nodemon": "^3.0.1",
     "prettyjson": "^1.2.5",
@@ -46,8 +49,8 @@
     "@typescript-eslint/parser": "^6.8.0",
     "eslint": "^8.51.0",
     "jest": "^29.7.0",
-    "ts-node": "^10.9.1",
     "ts-jest": "^29.1.1",
+    "ts-node": "^10.9.1",
     "typescript": "^5.2.2"
   }
 }

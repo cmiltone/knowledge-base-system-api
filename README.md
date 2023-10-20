@@ -1,5 +1,5 @@
 # knowledge-base-system-api
-The backend for Agriculture Knowledge System
+The backend for Agriculture Knowledge base System
 
 ## Running the app
 

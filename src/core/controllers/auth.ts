@@ -20,17 +20,16 @@ export class AuthController extends BaseHttpController {
   async login(): Promise<void> {
     const { identifier, password } = this.httpContext.request.body;
 
-    const result = await this.authService.login({ identifier }, { password, verify: true });
+    const result = await this.authService.login({ identifier, password });
 
-    this.httpContext.response.json({ ...result });
+    this.httpContext.response.json(result);
   }
 
   @httpPost(
     '/register',
     celebrate({
       body: Joi.object({
-        firstName: Joi.string().required(),
-        lastName: Joi.string().required(),
+        fullName: Joi.string().required(),
         phoneNumber: Joi.string().required(),
         email: Joi.string().required(),
         password: Joi.string().required(),
@@ -38,13 +37,10 @@ export class AuthController extends BaseHttpController {
     }),
   )
   async register(): Promise<void> {
-    const { firstName, lastName, phoneNumber, email, password } = this.httpContext.request.body;
+    const { fullName, phoneNumber, email, password } = this.httpContext.request.body;
 
-    const result = await this.authService.register(
-      { firstName, lastName, phoneNumber, email },
-      { password, verify: true },
-    );
+    const result = await this.authService.register({ fullName, email, phoneNumber, password });
 
-    this.httpContext.response.json({ ...result });
+    this.httpContext.response.json(result);
   }
 }

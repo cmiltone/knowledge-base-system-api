@@ -9,6 +9,7 @@ import { render } from 'prettyjson';
 import { AuthProvider } from './core/provider/auth';
 import { AddressInfo } from 'net';
 import { configureApp, errorMiddleware, notFoundErrorMiddleware } from './core/express';
+import { initDb } from './core/mongoose';
 
 process.on('uncaughtException', (error: Error) => {
   console.error('UNCAUGHT_EXCEPTION: %o', error);
@@ -22,6 +23,8 @@ process.on('unhandledRejection', (reason: unknown, promise: Promise<unknown>) =>
 });
 
 async function serveApp(): Promise<void> {
+  await initDb();
+
   console.info('DB_CONNECTED');
 
   const container = getContainer();
