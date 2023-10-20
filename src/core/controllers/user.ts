@@ -38,12 +38,13 @@ export class UserController extends BaseHttpController {
         limit: Joi.number().default(10),
         page: Joi.number().default(1),
         q: Joi.string(),
-        sort: Joi.string().equal('createdAt', 'updatedAt', 'fullName').default('createdAt')
+        sort: Joi.string().equal('createdAt', 'updatedAt', 'fullName').default('-createdAt'),
+        status: Joi.string(),
       })
     })
   )
   async page(): Promise<void> {
-    const { userId, limit, page, q, sort } = this.httpContext.request.query;
+    const { userId, limit, page, q, sort, status } = this.httpContext.request.query;
 
     if (userId) {
       const user = await this.userService.findById(userId as string);
@@ -52,7 +53,7 @@ export class UserController extends BaseHttpController {
       return;
     }
 
-    let query = {};
+    const query = {};
 
     const options: PageOptions = {
       limit: +limit,
@@ -62,7 +63,11 @@ export class UserController extends BaseHttpController {
     };
 
     if (q) {
-      query = { $text: { $search: q } }
+      query['$text'] = { $search: q };
+    }
+
+    if (status) {
+      query['status'] = status;
     }
 
     const pageResult = await this.userService.page(query, options);

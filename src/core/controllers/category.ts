@@ -57,12 +57,13 @@ export class CategoryController extends BaseHttpController {
         limit: Joi.number().default(10),
         page: Joi.number().default(1),
         q: Joi.string(),
-        sort: Joi.string().equal('createdAt', 'updatedAt', 'name').default('createdAt')
+        sort: Joi.string().equal('createdAt', 'updatedAt', 'name').default('-createdAt'),
+        status: Joi.string(),
       })
     })
   )
   async page(): Promise<void> {
-    const { categoryId, limit, page, q, sort } = this.httpContext.request.query;
+    const { categoryId, limit, page, q, sort, status } = this.httpContext.request.query;
 
     if (categoryId) {
       const category = await this.categoryService.findById(categoryId as string);
@@ -71,7 +72,7 @@ export class CategoryController extends BaseHttpController {
       return;
     }
 
-    let query = {};
+    const query = {};
 
     const options: PageOptions = {
       limit: +limit,
@@ -81,7 +82,11 @@ export class CategoryController extends BaseHttpController {
     };
 
     if (q) {
-      query = { $text: { $search: q } }
+      query['$text'] = { $search: q };
+    }
+
+    if (status) {
+      query['status'] = status;
     }
 
     const pageResult = await this.categoryService.page(query, options);
