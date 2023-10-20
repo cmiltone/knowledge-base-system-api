@@ -1,5 +1,5 @@
-# node-express-typescript
-Template for node back-end done with Typescript. Database system is upto you
+# knowledge-base-system-api
+The backend for Agriculture Knowledge System
 
 ## Running the app
 
