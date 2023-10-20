@@ -2,6 +2,7 @@ import { Schema, model, PaginateModel } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 
 import { DefaultDocument } from '../types/mongoose';
+import { Category } from '../types/article';
 
 const categorySchema = new Schema({
   name: {

@@ -54,7 +54,7 @@ export class ArticleController extends BaseHttpController {
       }),
     }),
   )
-  async register(): Promise<void> {
+  async update(): Promise<void> {
     const { articleId, title, content, creator, category, status, files } = this.httpContext.request.body;
 
     const result = await this.articleService.update(articleId, { title, content, creator, category, status, media: files });
