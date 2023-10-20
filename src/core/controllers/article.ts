@@ -2,7 +2,7 @@ import { controller, BaseHttpController, httpPost, httpPut, httpGet } from 'inve
 import { inject } from 'inversify';
 import { celebrate, Joi } from 'celebrate';
 import { ArticleService } from '../../services/article';
-import { Auth2Middleware } from '../middlewares/auth';
+import { AuthMiddleware } from '../middlewares/auth';
 import { PageOptions } from '../../types/mongoose';
 
 @controller('/v1/article')
@@ -12,7 +12,7 @@ export class ArticleController extends BaseHttpController {
 
   @httpPost(
     '/',
-    Auth2Middleware,
+    AuthMiddleware,
     celebrate({
       body: Joi.object({
         title: Joi.string().required(),
@@ -33,15 +33,15 @@ export class ArticleController extends BaseHttpController {
 
   @httpPut(
     '/',
-    Auth2Middleware,
+    AuthMiddleware,
     celebrate({
       body: Joi.object({
         articleId: Joi.string().required(),
-        title: Joi.string().required(),
-        content: Joi.string().required(),
-        creator: Joi.string().required(),
-        category: Joi.string().required(),
-        status: Joi.string().equal('published', 'draft', 'deleted').required(),
+        title: Joi.string(),
+        content: Joi.string(),
+        creator: Joi.string(),
+        category: Joi.string(),
+        status: Joi.string().equal('published', 'draft', 'deleted'),
       }),
     }),
   )
@@ -55,7 +55,7 @@ export class ArticleController extends BaseHttpController {
 
   @httpGet(
     '/',
-    Auth2Middleware,
+    AuthMiddleware,
     celebrate({
       query: Joi.object({
         articleId: Joi.string(),

@@ -2,6 +2,8 @@ import { injectable } from 'inversify';
 import _ from 'lodash';
 
 import { UserModel } from '../models/User';
+import { PaginateResult } from 'mongoose';
+import { PageOptions, Query } from '../types/mongoose';
 
 @injectable()
 export class UserService {
@@ -19,7 +21,7 @@ export class UserService {
 
     if (!user) throw new Error('User not found');
 
-    const updatedUser = await UserModel.findByIdAndUpdate(userId, _.pickBy(update), { new: true})
+    const updatedUser = await UserModel.findByIdAndUpdate(userId, _.pickBy(update), { new: true })
 
     return updatedUser;
   }
@@ -40,5 +42,11 @@ export class UserService {
     await UserModel.findByIdAndDelete(userId);
 
     return user;
+  }
+
+  async page(query: Query, options: PageOptions): Promise<PaginateResult<User>> {
+    const page = await UserModel.paginate<User, PageOptions>(query, options);
+
+    return page;
   }
 }

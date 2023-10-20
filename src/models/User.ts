@@ -26,7 +26,7 @@ const userSchema = new Schema({
   status: {
     type: String,
     default: 'active',
-    enum: ['active', 'blocked'],
+    enum: ['active', 'blocked', 'inactive'],
   },
   password: { type: String, required: true, select: false },
 },

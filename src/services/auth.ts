@@ -72,7 +72,8 @@ export class AuthService {
       _id: user.id,
       fullName: user.fullName,
       email: user.email,
-      status: user.status
+      status: user.status,
+      role: user.role
     });
 
     return { user, token };

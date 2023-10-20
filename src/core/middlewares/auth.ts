@@ -5,15 +5,20 @@ import { NextFunction } from 'connect';
 import { Principal } from '../provider/auth';
 
 @injectable()
-export class Auth0Middleware extends BaseMiddleware {
+export class AuthMiddleware extends BaseMiddleware {
   async handler(req: Request, res: Response, next: NextFunction): Promise<void> {
     try {
-      const isAuthenticated = await this.httpContext.user.isAuthenticated();
+      const principal = this.httpContext.user as Principal;
 
-      if (isAuthenticated) return next();
+      if (principal.details && principal.details.status === 'blocked')
+        throw new Error('You have been blocked. Contact admin');
+
+      if (await principal.isAuthenticated()) return next();
 
       throw new Error('Authentication failed');
     } catch (error) {
+      (error as DefaultError).code = '401';
+      (error as DefaultError).status = 401;
       next(error);
     }
   }
@@ -27,6 +32,11 @@ export class Auth2Middleware extends BaseMiddleware {
 
       if (principal.details && principal.details.status === 'blocked')
         throw new Error('You have been blocked. Contact admin');
+
+      const isAdmin = await principal.isInRole('admin');
+
+      if (!isAdmin)
+        throw new Error('You do not have permission to access this resource');
 
       if (await principal.isAuthenticated()) return next();
 

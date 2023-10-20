@@ -2,7 +2,7 @@ import { controller, BaseHttpController, httpPost, httpPut, httpGet } from 'inve
 import { inject } from 'inversify';
 import { celebrate, Joi } from 'celebrate';
 import { CategoryService } from '../../services/category';
-import { Auth2Middleware } from '../middlewares/auth';
+import { AuthMiddleware } from '../middlewares/auth';
 import { PageOptions } from '../../types/mongoose';
 
 @controller('/v1/category')
@@ -12,7 +12,7 @@ export class CategoryController extends BaseHttpController {
 
   @httpPost(
     '/',
-    Auth2Middleware,
+    AuthMiddleware,
     celebrate({
       body: Joi.object({
         name: Joi.string().required(),
@@ -30,13 +30,13 @@ export class CategoryController extends BaseHttpController {
 
   @httpPut(
     '/',
-    Auth2Middleware,
+    AuthMiddleware,
     celebrate({
       body: Joi.object({
         categoryId: Joi.string().required(),
-        name: Joi.string().required(),
-        description: Joi.string().required(),
-        status: Joi.string().equal('active', 'inacrive').required(),
+        name: Joi.string(),
+        description: Joi.string(),
+        status: Joi.string().equal('active', 'inactive'),
       }),
     }),
   )
@@ -50,7 +50,7 @@ export class CategoryController extends BaseHttpController {
 
   @httpGet(
     '/',
-    Auth2Middleware,
+    AuthMiddleware,
     celebrate({
       query: Joi.object({
         categoryId: Joi.string(),
