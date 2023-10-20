@@ -1,0 +1,53 @@
+{
+  "name": "knowledge-base-system-api",
+  "version": "1.0.0",
+  "description": "knowledge-base-system-api",
+  "type": "module",
+  "main": "dist/app.js",
+  "scripts": {
+    "build": "tsc",
+    "serve": "pm2 start ecosystem.config.js",
+    "stop": "pm2 delete ecosystem.config.js",
+    "start": "nodemon .",
+    "test": "jest",
+    "lint": "eslint --ignore-path .eslintignore --ext .ts src/",
+    "lint:fix": "yarn lint --fix"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cmiltone/knowledge-base-system-api.git"
+  },
+  "author": "castro <castromiltone@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/cmiltone/knowledge-base-system-api/issues"
+  },
+  "homepage": "https://github.com/cmiltone/knowledge-base-system-api#readme",
+  "dependencies": {
+    "celebrate": "^15.0.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "inversify": "^6.0.1",
+    "inversify-express-utils": "^6.4.3",
+    "jsonwebtoken": "^9.0.2",
+    "net": "^1.0.2",
+    "nodemon": "^3.0.1",
+    "prettyjson": "^1.2.5",
+    "reflect-metadata": "^0.1.13",
+    "serialize-error": "^11.0.2"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.20",
+    "@types/jest": "^29.5.6",
+    "@types/jsonwebtoken": "^9.0.4",
+    "@types/node": "^20.8.7",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "eslint": "^8.51.0",
+    "jest": "^29.7.0",
+    "ts-node": "^10.9.1",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.2.2"
+  }
+}

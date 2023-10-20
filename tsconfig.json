@@ -1,0 +1,26 @@
+{
+  "compilerOptions": {
+    "target": "ESNext",
+    "lib": ["ESNext", "esnext.asynciterable"],
+    "typeRoots": ["./node_modules/@types", "src/types"],
+    "types": ["reflect-metadata", "node", "jest"],
+    "allowSyntheticDefaultImports": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "moduleResolution": "node",
+    "module": "ESNext",
+    "pretty": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "allowJs": true,
+    "noEmit": false,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+  },
+  "ts-node": {
+    "esm": true
+  },
+  "include": ["./src/**/*"],
+  "exclude": ["./node_modules"]
+}

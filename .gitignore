@@ -1,0 +1,9 @@
+node_modules
+.env
+.vscode
+
+ecosystem.config.js
+
+coverage
+
+yarn-error.log
