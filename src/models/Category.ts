@@ -27,4 +27,4 @@ categorySchema.plugin(mongoosePaginate);
 
 categorySchema.index({ name: 'text', description: 'text' });
 
-export const CategoryModel = model<CategoryDocument, PaginateModel<CategoryDocument>>('Category',categorySchema);
+export const CategoryModel = model<CategoryDocument, PaginateModel<CategoryDocument>>('Category', categorySchema);

@@ -2,8 +2,8 @@ import { Schema, model, PaginateModel } from 'mongoose';
 import mongoosePaginate from 'mongoose-paginate-v2';
 
 import { DefaultDocument } from '../types/mongoose';
-import { fileSchema } from '../schema/file';
 import { Article } from '../types/article';
+// import { MediaModel } from './Media';
 
 const articleSchema = new Schema({
   title: {
@@ -28,15 +28,25 @@ const articleSchema = new Schema({
     type: String,
     default: 'draft',
     enum: ['published', 'draft', 'deleted'],
-  },
-  media: [fileSchema]
+  }
 },
-{ timestamps: true });
+{
+  timestamps: true,
+  toObject: { virtuals: true },
+  toJSON: { virtuals: true },
+});
+
+articleSchema.index({ title: 'text', content: 'text' });
 
 type ArticleDocument = DefaultDocument & Article;
 
 articleSchema.plugin(mongoosePaginate);
 
-articleSchema.index({ title: 'text', content: 'text' })
+articleSchema.virtual('media', {
+  ref: 'Media',
+  localField: '_id',
+  foreignField: 'article',
+  justOne: false,
+})
 
 export const ArticleModel = model<ArticleDocument, PaginateModel<ArticleDocument>>('Article',articleSchema);

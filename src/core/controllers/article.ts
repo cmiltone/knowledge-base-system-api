@@ -51,13 +51,18 @@ export class ArticleController extends BaseHttpController {
         category: Joi.string(),
         status: Joi.string().equal('published', 'draft', 'deleted'),
         files: Joi.array().items(fileJoi).max(4),
+        deletedMedia: Joi.string().allow('')
       }),
     }),
   )
   async update(): Promise<void> {
-    const { articleId, title, content, creator, category, status, files } = this.httpContext.request.body;
+    const { articleId, title, content, creator, category, status, files, deletedMedia } = this.httpContext.request.body;
 
-    const result = await this.articleService.update(articleId, { title, content, creator, category, status, media: files });
+    let dm = [];
+
+    if (deletedMedia !== '') dm = deletedMedia.split(',');
+
+    const result = await this.articleService.update(articleId, { title, content, creator, category, status, media: files, deletedMedia: dm });
 
     this.httpContext.response.json(result);
   }
@@ -93,7 +98,7 @@ export class ArticleController extends BaseHttpController {
       page: +page,
       lean: true,
       sort: sort as string,
-      populate: [{ path: 'creator' }, { path: 'category' }]
+      populate: [{ path: 'creator' }, { path: 'category' }, { path: 'media' }]
     };
 
     if (q) {

@@ -59,7 +59,6 @@ export class UploadMiddleware extends BaseMiddleware {
         else throw new Error('File type is not supported');
         
         if (!_isPdf) {
-          console.log("uploaded ")
           const { height, width, orientation } = imageSize(`${resolve(FILE_PATH)}/${thumbnail}`);
 
           const file: File = {
@@ -117,7 +116,7 @@ export class UploadMiddleware extends BaseMiddleware {
         }
 
         req.body.files = files;
-      } else console.log("no file")
+      }
 
       next();
     } catch (error) {
