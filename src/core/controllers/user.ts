@@ -17,14 +17,15 @@ export class UserController extends BaseHttpController {
       body: Joi.object({
         userId: Joi.string().required(),
         fullName: Joi.string(),
+        role: Joi.string().equal('user', 'admin', 'expert'),
         status: Joi.string().equal('active', 'inactive', 'blocked'),
       }),
     }),
   )
   async update(): Promise<void> {
-    const { userId, fullName, status } = this.httpContext.request.body;
+    const { userId, fullName, status, role } = this.httpContext.request.body;
 
-    const result = await this.userService.update(userId, { fullName, status });
+    const result = await this.userService.update(userId, { fullName, status, role });
 
     this.httpContext.response.json(result);
   }

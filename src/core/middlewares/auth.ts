@@ -13,6 +13,9 @@ export class AuthMiddleware extends BaseMiddleware {
       if (principal.details && principal.details.status === 'blocked')
         throw new Error('You have been blocked. Contact admin');
 
+      if (principal.details && principal.details.status === 'inactive')
+        throw new Error('Your account is inactive. Contact admin');
+
       if (await principal.isAuthenticated()) return next();
 
       throw new Error('Authentication failed');
