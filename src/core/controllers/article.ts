@@ -79,11 +79,12 @@ export class ArticleController extends BaseHttpController {
         sort: Joi.string().equal('createdAt', 'updatedAt', 'title').default('-createdAt'),
         status: Joi.string(),
         categoryId: Joi.string(),
+        userId: Joi.string(),
       })
     })
   )
   async page(): Promise<void> {
-    const { articleId, limit, page, q, sort, status, categoryId } = this.httpContext.request.query;
+    const { articleId, limit, page, q, sort, status, categoryId, userId } = this.httpContext.request.query;
 
     if (articleId) {
       const article = await this.articleService.findById(articleId as string);
@@ -112,6 +113,10 @@ export class ArticleController extends BaseHttpController {
 
     if (categoryId) {
       query['category'] = categoryId;
+    }
+
+    if (userId) {
+      query['creator'] = userId;
     }
 
     const pageResult = await this.articleService.page(query, options);
