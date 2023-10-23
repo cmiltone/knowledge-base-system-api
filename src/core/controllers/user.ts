@@ -17,7 +17,7 @@ export class UserController extends BaseHttpController {
       body: Joi.object({
         userId: Joi.string().required(),
         fullName: Joi.string(),
-        role: Joi.string().equal('user', 'admin', 'expert'),
+        role: Joi.string().equal('user', 'admin', 'creator'),
         status: Joi.string().equal('active', 'inactive', 'blocked'),
       }),
     }),

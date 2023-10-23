@@ -3,7 +3,7 @@ type User = {
     fullName: string;
     phoneNumber: string;
     email: string;
-    role: 'admin' | 'user' | 'expert';
+    role: 'admin' | 'user' | 'creator';
     password: string;
     status?: string;
     createdAt?: Date;
