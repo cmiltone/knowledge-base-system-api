@@ -8,6 +8,7 @@ import { MediaModel } from '../models/Media';
 import { Media } from '../types/media';
 import { Article } from '../types/article';
 import { File } from '../types/file';
+import { EngagementModel } from '../models/Engagement';
 
 type ArticleData = {
   title: Article['title'];
@@ -48,11 +49,15 @@ export class ArticleService {
 
     await article.save();
 
+    const engagement = new EngagementModel({ article: article._id, likes: [], comments: [] });
+
+    engagement.save();
+
     await article.populate([
       { path: 'category' },
       { path: 'creator' },
       { path: 'media' },
-      { path: 'engagement' },
+      { path: 'engagement', populate: [ { path: 'likes.user' }, { path: 'comments.user' } ]  },
     ])
 
     return article;
@@ -82,7 +87,7 @@ export class ArticleService {
       { path: 'category' },
       { path: 'creator' },
       { path: 'media' },
-      { path: 'engagement' },
+      { path: 'engagement', populate: [ { path: 'likes.user' }, { path: 'comments.user' } ]  },
     ])
 
     return article;
@@ -97,7 +102,7 @@ export class ArticleService {
       { path: 'creator' },
       { path: 'category' },
       { path: 'media' },
-      { path: 'engagement' },
+      { path: 'engagement', populate: [ { path: 'likes.user' }, { path: 'comments.user' } ]  },
     ]);
   
     return article;

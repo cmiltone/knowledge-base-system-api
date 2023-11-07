@@ -104,7 +104,7 @@ export class ArticleController extends BaseHttpController {
         { path: 'creator' },
         { path: 'category' },
         { path: 'media' },
-        { path: 'engagement' }
+        { path: 'engagement', populate: [ { path: 'likes.user' }, { path: 'comments.user' } ] }
       ]
     };
 

@@ -53,7 +53,7 @@ articleSchema.virtual('engagement', {
   ref: 'Engagement',
   localField: '_id',
   foreignField: 'article',
-  justOne: false,
+  justOne: true,
 })
 
 export const ArticleModel = model<ArticleDocument, PaginateModel<ArticleDocument>>('Article',articleSchema);

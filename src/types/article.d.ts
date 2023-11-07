@@ -24,6 +24,7 @@ type Article = {
 type Comment = {
     _id?: string;
     message: string;
+    user: string | User;
     reply?: Comment;
     createdAt?: Date;
     updatedAt?: Date;

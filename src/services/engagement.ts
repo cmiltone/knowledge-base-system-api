@@ -13,15 +13,16 @@ export class EngagementService {
       likes: Engagement['likes'];
       comments: Engagement['comments'];
     }): Promise<Engagement> {
-    if (data.likes.length) {
-      const existingEngagement = await EngagementModel.findOne({ article: data.article, 'likes.user': { $in: data.likes.map((like: Like) => like.user)} });
+    const { article, likes, comments } = data;
+    if (likes?.length) {
+      const existingEngagement = await EngagementModel.findOne({ article, 'likes.user': { $in: likes.map((like: Like) => like.user)} });
 
       if (existingEngagement) throw new Error('Already liked');
     }
 
-    const engagement = new EngagementModel(data);
+    const engagement = await EngagementModel.findOneAndUpdate({ article }, { $push: { likes, comments }}, { new: true, runValidators: true });
 
-    engagement.save();
+    if (!engagement) throw new Error('Engagement Not Found');
 
     return engagement;
   }
