@@ -20,3 +20,27 @@ type Article = {
     createdAt?: Date;
     updatedAt?: Date;
 };
+
+type Comment = {
+    _id?: string;
+    message: string;
+    reply?: Comment;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+type Like = {
+    _id?: string;
+    user: string | User;
+    createdAt?: Date;
+    updatedAt?: Date;
+}
+
+type Engagement = {
+    _id?: string;
+    article: Article | string;
+    comments: (string | Comment)[];
+    likes: (string | Like)[];
+    createdAt?: Date;
+    updatedAt?: Date;
+}

@@ -49,4 +49,11 @@ articleSchema.virtual('media', {
   justOne: false,
 })
 
+articleSchema.virtual('engagement', {
+  ref: 'Engagement',
+  localField: '_id',
+  foreignField: 'article',
+  justOne: false,
+})
+
 export const ArticleModel = model<ArticleDocument, PaginateModel<ArticleDocument>>('Article',articleSchema);

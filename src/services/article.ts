@@ -51,7 +51,8 @@ export class ArticleService {
     await article.populate([
       { path: 'category' },
       { path: 'creator' },
-      { path: 'media' }
+      { path: 'media' },
+      { path: 'engagement' },
     ])
 
     return article;
@@ -80,7 +81,8 @@ export class ArticleService {
     await article.populate([
       { path: 'category' },
       { path: 'creator' },
-      { path: 'media' }
+      { path: 'media' },
+      { path: 'engagement' },
     ])
 
     return article;
@@ -95,6 +97,7 @@ export class ArticleService {
       { path: 'creator' },
       { path: 'category' },
       { path: 'media' },
+      { path: 'engagement' },
     ]);
   
     return article;

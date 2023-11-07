@@ -100,7 +100,12 @@ export class ArticleController extends BaseHttpController {
       page: +page,
       lean: true,
       sort: sort as string,
-      populate: [{ path: 'creator' }, { path: 'category' }, { path: 'media' }]
+      populate: [
+        { path: 'creator' },
+        { path: 'category' },
+        { path: 'media' },
+        { path: 'engagement' }
+      ]
     };
 
     if (q) {
