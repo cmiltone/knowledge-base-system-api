@@ -9,7 +9,8 @@ const likeSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User',
     required: true,
-  }
+  },
+  createdAt: {type: Date, default: Date.now},
 }, { timestamps: true });
 
 const commentSchema = new Schema({
@@ -18,11 +19,12 @@ const commentSchema = new Schema({
     type: Schema.ObjectId,
     ref: 'User',
     required: true,
-  }
+  },
+  createdAt: {type: Date, default: Date.now},
 }, { timestamps: true });
 
 commentSchema.add({
-  reply: commentSchema,
+  replies: [commentSchema],
 })
 
 const engagementSchema = new Schema({

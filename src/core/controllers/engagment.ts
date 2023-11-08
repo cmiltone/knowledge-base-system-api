@@ -40,20 +40,17 @@ export class EngagementController extends BaseHttpController {
     celebrate({
       body: Joi.object({
         engagementId: Joi.string().required(),
-        likes: Joi.array().items(Joi.object({
-          user: Joi.string().required(),
-        })).required(),
-        comments: Joi.array().items(Joi.object({
-          user: Joi.string().required(),
+        comment: Joi.array().items(Joi.object({
+          id: Joi.string().required(),
           message: Joi.string().required()
         })).required(),
       }),
     }),
   )
   async update(): Promise<void> {
-    const { engagementId, likes, comments } = this.httpContext.request.body;
+    const { engagementId, comment } = this.httpContext.request.body;
 
-    const result = await this.engagementService.update(engagementId, { likes, comments });
+    const result = await this.engagementService.update(engagementId, { comment });
 
     this.httpContext.response.json(result);
   }
@@ -94,4 +91,21 @@ export class EngagementController extends BaseHttpController {
 
     this.httpContext.response.json(pageResult);
   }
+
+  // @httpDelete(
+  //   '/:engagementId',
+  //   AuthMiddleware,
+  //   celebrate({
+  //     params: Joi.object({
+  //       engagementId: Joi.string().required()
+  //     }),
+  //   })
+  // )
+  // async deleteUser(): Promise<void> {
+  //   const { engagementId } = this.httpContext.request.params;
+
+  //   const user = await this.engagementService.delete(engagementId);
+
+  //   this.httpContext.response.json(user);
+  // }
 }

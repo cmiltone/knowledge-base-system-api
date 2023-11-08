@@ -25,7 +25,7 @@ type Comment = {
     _id?: string;
     message: string;
     user: string | User;
-    reply?: Comment;
+    replies?: Comment[];
     createdAt?: Date;
     updatedAt?: Date;
 }
