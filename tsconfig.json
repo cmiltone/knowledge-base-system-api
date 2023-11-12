@@ -1,26 +1,23 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
-    "lib": ["ESNext", "esnext.asynciterable"],
+    "target": "es6",
+    "lib": ["es6", "esnext.asynciterable"],
     "typeRoots": ["./node_modules/@types", "src/types"],
-    "types": ["reflect-metadata", "node", "jest"],
+    "types": ["reflect-metadata"],
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
     "moduleResolution": "node",
-    "module": "ESNext",
+    "module": "commonjs",
     "pretty": true,
     "sourceMap": true,
-    "outDir": "dist",
+    "outDir": "./build",
     "allowJs": true,
     "noEmit": false,
     "esModuleInterop": true,
-    "skipLibCheck": true,
+    "skipLibCheck": true
   },
-  "ts-node": {
-    "esm": true
-  },
-  "include": ["./src/**/*"],
-  "exclude": ["./node_modules"]
+  "include": ["./src/**/*", "sites_assets/**/*"],
+  "exclude": ["./node_modules", "./.history"]
 }

@@ -5,7 +5,7 @@ import * as multer from 'multer';
 import { extname, resolve } from 'path';
 import mkdirp from 'mkdirp';
 import imageSize from 'image-size';
-import { fileTypeFromFile } from 'file-type';
+import { fromFile as fileTypeFromFile } from 'file-type';
 import isVideo from 'is-video';
 import isImage from 'is-image';
 import Ffmpeg from 'ffmpeg';

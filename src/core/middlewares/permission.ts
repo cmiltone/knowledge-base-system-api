@@ -9,7 +9,7 @@ export class PermitDefaultMiddleware extends BaseMiddleware {
     try {
       const principal = this.httpContext.user as Principal;
 
-      const permitted = await principal.hasPermission(['default']);
+      const permitted = await principal.hasPermission(['user']);
 
       if (permitted) return next();
 

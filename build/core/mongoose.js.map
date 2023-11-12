@@ -1,0 +1,1 @@
+{"version":3,"file":"mongoose.js","sourceRoot":"","sources":["../../src/core/mongoose.ts"],"names":[],"mappings":";;;;;;;;;;;;;;;AACA,wDAAgC;AAChC,iDAAkD;AAElD,SAAsB,MAAM;;QAC1B,MAAM,UAAU,GAAG,MAAM,kBAAQ,CAAC,OAAO,CAAC,uBAAY,CAAC,CAAC;QAExD,OAAO,UAAU,CAAC,UAAU,CAAC,EAAE,CAAC;IAClC,CAAC;CAAA;AAJD,wBAIC"}
